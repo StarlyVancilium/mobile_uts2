@@ -233,14 +233,16 @@ class ApiService {
       );
 
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        if (data['success']) {
-          return (data['data'] as List)
-              .map((produk) => Produk.fromJson(produk))
-              .toList();
-        }
+        // PERBAIKAN: Ikuti logika referensi 'punya_temen'
+        // Langsung akses ['data'] tanpa cek boolean 'success'
+        final body = json.decode(response.body);
+        final List data = body['data'];
+
+        return data.map((json) => Produk.fromJson(json)).toList();
+      } else {
+        print('Gagal load produk: ${response.statusCode}');
+        return [];
       }
-      return [];
     } catch (e) {
       print('Error getProduk: $e');
       return [];

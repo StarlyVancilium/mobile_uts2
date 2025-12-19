@@ -1,53 +1,53 @@
+// lib/models/produk_model.dart
 class Produk {
-  final int? id;
-  final int? kategoriId;
+  final int id;
+  final int kategoriId;
   final String namaProduk;
-  final String? deskripsi;
+  final String deskripsi;
   final double harga;
   final int stok;
-  final String? gambarUrl;
+  final String gambarUrl;
   final bool isActive;
   final String? namaKategori;
 
   Produk({
-    this.id,
-    this.kategoriId,
+    this.id = 0,
+    this.kategoriId = 0,
     required this.namaProduk,
-    this.deskripsi,
+    required this.deskripsi,
     required this.harga,
     required this.stok,
-    this.gambarUrl,
+    required this.gambarUrl,
     this.isActive = true,
     this.namaKategori,
   });
 
   factory Produk.fromJson(Map<String, dynamic> json) {
     return Produk(
-      id: json['id'],
-      kategoriId: json['kategori_id'],
-      namaProduk: json['nama_produk'],
-      deskripsi: json['description'] ?? json['deskripsi'],
-      harga: double.parse(json['harga'].toString()),
+      id: int.tryParse(json['id']?.toString() ?? '0') ?? 0,
+      kategoriId: int.tryParse(json['kategori_id']?.toString() ?? '0') ?? 0,
+      // Menyesuaikan key dengan referensi 'punya_temen'
+      namaProduk: json['nama_produk']?.toString() ?? 'Tanpa Nama',
+      deskripsi: json['description']?.toString() ?? json['deskripsi'] ?? '-',
+      harga: double.tryParse(json['harga']?.toString() ?? '0') ?? 0.0,
       stok: int.tryParse(json['ketersediaan_stok']?.toString() ??
               json['stok']?.toString() ??
               '0') ??
           0,
-      gambarUrl: json['foto_url'] ?? json['gambar_url'],
-      isActive: json['is_active'] == 1 || json['is_active'] == true,
-      namaKategori: json['nama_kategori'],
+      // Referensi menggunakan 'foto_url' untuk gambar lengkap
+      gambarUrl: json['foto_url']?.toString() ?? json['gambar_url'] ?? '',
+      isActive: true, // Asumsikan aktif jika data muncul dari API
+      namaKategori: json['nama_kategori']?.toString(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'kategori_id': kategoriId,
       'nama_produk': namaProduk,
-      'deskripsi': deskripsi,
       'harga': harga,
       'stok': stok,
-      'gambar_url': gambarUrl,
-      'is_active': isActive ? 1 : 0,
+      'description': deskripsi,
     };
   }
 }
