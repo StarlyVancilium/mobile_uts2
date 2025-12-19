@@ -26,11 +26,14 @@ class Produk {
       id: json['id'],
       kategoriId: json['kategori_id'],
       namaProduk: json['nama_produk'],
-      deskripsi: json['deskripsi'],
+      deskripsi: json['description'] ?? json['deskripsi'],
       harga: double.parse(json['harga'].toString()),
-      stok: json['stok'],
-      gambarUrl: json['gambar_url'],
-      isActive: json['is_active'] == 1,
+      stok: int.tryParse(json['ketersediaan_stok']?.toString() ??
+              json['stok']?.toString() ??
+              '0') ??
+          0,
+      gambarUrl: json['foto_url'] ?? json['gambar_url'],
+      isActive: json['is_active'] == 1 || json['is_active'] == true,
       namaKategori: json['nama_kategori'],
     );
   }

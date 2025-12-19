@@ -1,4 +1,4 @@
-class Pesanan {
+class OrderModel {
   final int id;
   final int user_id;
   final int product_id;
@@ -8,7 +8,7 @@ class Pesanan {
   final bool pedas;
   final bool asin;
   final bool barbeque;
-  final double total_harga;
+  final int total_harga;
   final String status;
 
   // ! Data Relasi
@@ -16,22 +16,10 @@ class Pesanan {
   final String? productPhoto;
   final String? userName;
 
-  // Tambahkan untuk kompatibilitas
-  final int? userId;
-  final String? kodePesanan;
-  final DateTime? tanggalPesanan;
-  final double? subtotal;
-  final double? ongkir;
-  final double? totalBayar;
-  final String? alamatKirim;
-  final String? kotaTujuan;
-  final String? catatan;
-  final List? details;
-
-  Pesanan({
-    this.id,
-    this.user_id,
-    this.product_id,
+  OrderModel({
+    required this.id,
+    required this.user_id,
+    required this.product_id,
     required this.total_barang,
     required this.balado,
     required this.keju,
@@ -43,19 +31,9 @@ class Pesanan {
     this.productName,
     this.productPhoto,
     this.userName,
-    this.userId,
-    this.kodePesanan,
-    this.tanggalPesanan,
-    this.subtotal,
-    this.ongkir,
-    this.totalBayar,
-    this.alamatKirim,
-    this.kotaTujuan,
-    this.catatan,
-    this.details,
   });
 
-  factory Pesanan.fromJson(Map<String, dynamic> json) {
+  factory OrderModel.fromJson(Map<String, dynamic> json) {
     String? pName;
     String? pPhoto;
     String? uName;
@@ -69,7 +47,7 @@ class Pesanan {
       uName = json['user']['name']?.toString();
     }
 
-    return Pesanan(
+    return OrderModel(
       // ! Parse ID
       id: int.tryParse(json['id']?.toString() ?? '0') ?? 0,
       user_id: int.tryParse(json['user_id']?.toString() ?? '0') ?? 0,
@@ -84,23 +62,13 @@ class Pesanan {
       barbeque: _parseBool(json['barbeque']),
 
       // ! Parse Total Harga
-      total_harga: double.tryParse(json['total_harga']?.toString() ?? '0') ?? 0,
+      total_harga:
+          (double.tryParse(json['total_harga']?.toString() ?? '0') ?? 0)
+              .toInt(),
       status: json['status']?.toString() ?? 'unknown',
       productName: pName,
       productPhoto: pPhoto,
       userName: uName,
-      userId: json['user_id'],
-      kodePesanan: json['kode_pesanan'],
-      tanggalPesanan: json['tanggal_pesanan'] != null
-          ? DateTime.parse(json['tanggal_pesanan'])
-          : null,
-      subtotal: double.tryParse(json['subtotal']?.toString() ?? '0'),
-      ongkir: double.tryParse(json['ongkir']?.toString() ?? '0'),
-      totalBayar: double.tryParse(json['total_bayar']?.toString() ?? '0'),
-      alamatKirim: json['alamat_kirim'],
-      kotaTujuan: json['kota_tujuan'],
-      catatan: json['catatan'],
-      details: json['details'],
     );
   }
 
@@ -123,15 +91,6 @@ class Pesanan {
       'barbeque': barbeque,
       'total_harga': total_harga,
       'status': status,
-      'user_id': userId,
-      'kode_pesanan': kodePesanan,
-      'tanggal_pesanan': tanggalPesanan?.toIso8601String(),
-      'subtotal': subtotal,
-      'ongkir': ongkir,
-      'total_bayar': totalBayar,
-      'alamat_kirim': alamatKirim,
-      'kota_tujuan': kotaTujuan,
-      'catatan': catatan,
     };
   }
 }

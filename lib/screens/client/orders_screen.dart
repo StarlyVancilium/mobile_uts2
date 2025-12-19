@@ -103,7 +103,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(
-                            'Tanggal: ${pesanan.tanggalPesanan.toLocal().toString().split(' ')[0]}'),
+                            'Tanggal: ${pesanan.tanggalPesanan?.toLocal().toString().split(' ')[0] ?? 'N/A'}'),
                         trailing: Chip(
                           label: Text(
                             pesanan.status,
@@ -144,7 +144,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                     Text(
-                                        'Rp ${pesanan.totalBayar.toStringAsFixed(0)}',
+                                        'Rp ${pesanan.totalBayar?.toStringAsFixed(0) ?? '0'}',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.orange)),

@@ -1,11 +1,11 @@
-class User {
+class UserModel {
   final int? id;
   final String name;
   final String email;
   final String role;
   final String status;
 
-  User({
+  UserModel({
     this.id,
     required this.name,
     required this.email,
@@ -14,10 +14,10 @@ class User {
   });
 
   /// Untuk response LOGIN
-  factory User.fromLoginResponse(Map<String, dynamic> json) {
+  factory UserModel.fromLoginResponse(Map<String, dynamic> json) {
     final user = json['user'];
 
-    return User(
+    return UserModel(
       id: user['id'],
       name: user['name'],
       email: user['email'],
@@ -27,23 +27,13 @@ class User {
   }
 
   /// Untuk response LIST USER
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
       id: json['id'],
       name: json['name'],
       email: json['email'],
       role: json['role'],
       status: json['status'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'email': email,
-      'role': role,
-      'status': status,
-    };
   }
 }
