@@ -29,9 +29,9 @@ class Pesanan {
   final List? details;
 
   Pesanan({
-    this.id,
-    this.user_id,
-    this.product_id,
+    this.id = 0, // CHANGED: Added default value
+    this.user_id = 0, // CHANGED: Added default value
+    this.product_id = 0, // CHANGED: Added default value
     required this.total_barang,
     required this.balado,
     required this.keju,

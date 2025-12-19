@@ -127,14 +127,25 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
     final result = await ApiService.createPesanan(
       Pesanan(
         userId: widget.user.id!,
+
+        // --- ADDED MISSING REQUIRED FIELDS ---
+        total_barang: 1,
+        total_harga: produk.harga, // Assuming total matches price for 1 item
+        balado: false,
+        keju: false,
+        pedas: false,
+        asin: false,
+        barbeque: false,
+        // -------------------------------------
+
         kodePesanan: 'ORD-${DateTime.now().millisecondsSinceEpoch}',
         tanggalPesanan: DateTime.now(),
         status: 'menunggu antrian',
         subtotal: produk.harga,
         ongkir: 0.0,
         totalBayar: produk.harga,
-        alamatKirim: widget.user.alamat ?? 'Alamat Default',
-        kotaTujuan: widget.user.kota,
+        // alamatKirim: widget.user.alamat ?? 'Alamat Default',
+        // kotaTujuan: widget.user.kota,
       ),
       [
         DetailPesanan(
